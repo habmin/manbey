@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.min.js"></script>
+    <script type="text/javascript" src="https://tetoki.eu/vida/vida/p5.vida.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+  </head>
+  <body>
+    <main>
+      <div id="p5canvas"></div>
+      <div class="mainControls">
+        <button id="captureBtn" class="ctrlBtn" type="button">Capture</button>
+        <button id="stopBtn" class="ctrlBtn" type="button">Stop</button>
+        <button id="clearBtn" class="ctrlBtn" type="button">Clear</button>
+      </div>
+      <div class="sliderBox">
+        <div class="sliderBar">
+          <label class="sliderLabel" for="activeX">X Position</label>
+          <input type="range" min="0" max="1" value="0.1" class="slider" step ="0.01"id="activeX" name="activeX"/>
+        </div>
+        <div class="sliderBar">
+          <label class="sliderLabel" for="activeY">Y Position</label>
+          <input type="range" min="0" max="1" value="0.1" class="slider" step ="0.01" id="activeY" name="activeY"/>
+        </div>
+        <div class="sliderBar">
+          <label class="sliderLabel" for="activeW">Width</label>
+          <input type="range" min="0" max="1" value="0.8" class="slider" step ="0.01" id="activeW" name="activeW" />
+        </div>
+        <div class="sliderBar">
+          <label class="sliderLabel" for="activeH">Height</label>
+          <input type="range" min="0" max="1" value="0.8" class="slider" step ="0.01" id="activeH" />
+        </div>
+      </div>
+      <div class="artBar">
+        <label for="artMode">Art Mode</label>
+        <select name="artMenu" id="artMenu">
+          <option class="artOption" value="point">Pointillism</option>
+          <option class="artOption" value="draw">Drawing</option>
+        </select>
+        <div class="colorPickerMenu">
+          <div class="colorMenu1">
+            <label for="color1">Color 1</label>
+            <input type="color" id="color1" value="#6bef79">
+          </div>
+          <div class="colorMenu2">
+            <label for="color2">Color 2</label>
+            <input type="color" id="color2" value="#e55304">
+          </div>
+          <div class="colorMenu3">
+            <label for="color3">Color 3</label>
+            <input type="color" id="color3" value="#258fdb">
+          </div>
+        </div>
+        <label for="swiggleCheck">Swiggle Mode</label>
+        <input type="checkbox" id="swiggleCheck" name="swiggleCheck" />
+        <label class="sliderLabel" for="swiggleValue">Swigglification</label>
+        <input type="range" min="0" max="10" value="0" class="slider" step ="1" id="swiggleValue" name="swiggleValue"/>
+        <label for="rainbowMode">Rainbow Mode</label>
+        <input type="checkbox" id="rainbowMode" name="rainbowMode" />
+      </div>
+      <div class="filterBar">
+        <label for="backgroundMenu">Background</label>
+        <select name="backgroundMenu" id="backgroundMenu">
+          <option class="bgOption" value="camera">Camera</option>
+          <option class="bgOption" value="canvas">Canvas</option>
+          <option class="bgOption" value="threshold">Threshold</option>
+        </select>
+        <label for="activeArea">Active Area</label>
+        <input type="checkbox" id="activeAreaCheck" name="activeArea"/>
+        <label for="drawBlobs">Draw Blobs</label>
+        <input type="checkbox" id="drawBlobsCheck" name="drawBlobs"/>
+      </div>
+    </main>
+  </body>
+<!--   <script async defer src="sketch.js"></script> -->
+</html>

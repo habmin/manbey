@@ -1,0 +1,58 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica;
+  color: white;
+  background-color: black;
+}
+canvas {
+  display: block;
+}
+
+main {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+#p5canvas {
+  width: 640px;
+  height: 480px;
+}
+
+.mainControls {
+  display: flex;
+  justify-content: space-evenly;
+  width: 640px;
+  padding: 10px;
+}
+
+.ctrlBtn {
+  padding: 15px;
+  font-size: larger;
+}
+
+.sliderBox {
+  width: 640px;
+}
+
+.sliderBar {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: baseline;
+  padding: 5px;
+}
+
+.sliderLabel {
+  width: 15%;
+}
+
+.slider {
+  width: 85%;
+}
+
+.artBar {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
