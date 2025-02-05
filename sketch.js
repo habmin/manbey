@@ -35,7 +35,6 @@ window.addEventListener('message', function(event) {
         vida.setBackgroundImage(video);
         points = [];
         blobs = vida.getBlobs();
-        console.log(blobs);
       }
     } else if (data['stopBtn']) {
       blobs = [];
