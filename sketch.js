@@ -83,6 +83,7 @@ let layerFlags = {
   thresholdFlag: false,
   videoFlag: true,
   starfieldFlag: false,
+  arenaFlag: false,
   canvasFlag: false
 };
 
@@ -94,25 +95,36 @@ backgroundMenu.oninput = () => {
       layerFlags.thresholdFlag = true;
       layerFlags.videoFlag = false;
       layerFlags.starfieldFlag = false,
-      layerFlags.canvasFlag = false;
+      layerFlags.canvasFlag = false,
+      layerFlags.arenaFlag = false
     }
     else if (backgroundMenu.value == "canvas") {
       layerFlags.thresholdFlag = false;
       layerFlags.videoFlag = false;
       layerFlags.starfieldFlag = false,
-      layerFlags.canvasFlag = true;
+      layerFlags.canvasFlag = true,
+      layerFlags.arenaFlag = false
     }
     else if (backgroundMenu.value == "camera") {
       layerFlags.thresholdFlag = false;
       layerFlags.videoFlag = true;
       layerFlags.starfieldFlag = false,
-      layerFlags.canvasFlag = false;
+      layerFlags.canvasFlag = false,
+      layerFlags.arenaFlag = false
     }
     else if (backgroundMenu.value == "starfield") {
       layerFlags.thresholdFlag = false;
       layerFlags.videoFlag = false;
       layerFlags.starfieldFlag = true,
-      layerFlags.canvasFlag = false;
+      layerFlags.canvasFlag = false,
+      layerFlags.arenaFlag = false
+    }
+    else if (backgroundMenu.value == "arena") {
+      layerFlags.thresholdFlag = false;
+      layerFlags.videoFlag = false;
+      layerFlags.starfieldFlag = false,
+      layerFlags.canvasFlag = false,
+      layerFlags.arenaFlag = true
     }
   }
 }
@@ -148,6 +160,7 @@ activeAreaCheck.oninput = () => {
 function preload() { 
    canvas = loadImage('images/canvas.jpg');
    starfield = loadImage('images/starfield.png');
+   arena = loadImage('images/arena.jpg');
 }
 
 function resizeArena() {
@@ -218,6 +231,10 @@ function draw() {
   if (layerFlags.starfieldFlag) {
     starfield.resize(video.width, video.height)
     image(starfield, 0, 0);
+  }
+  if (layerFlags.arenaFlag) {
+    arena.resize(video.width, video.height)
+    image(arena, 0, 0);
   }
   try {
     for (let i = 0; i < blobs.length; i++) {
