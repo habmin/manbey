@@ -174,6 +174,14 @@ let showActiveFlag = false;
 let drawBlobsCheck = document.getElementById('drawBlobsCheck');
 let activeAreaCheck = document.getElementById('activeAreaCheck');
 
+let thresholdValue = document.getElementById('thresholdValue');
+let thresholdOutput = document.getElementById('thresholdOutput');
+
+thresholdValue.oninput = (event) => {
+    thresholdOutput.innerHTML = event.target.value;
+    sendUpdate('thresholdValue', event.target.value);
+}
+
 drawBlobsCheck.oninput = () => {
     if (drawBlobsCheck.checked)
         showDrawBlobsFlag = true;
@@ -212,6 +220,7 @@ window.onload = () => {
             rainbowMode: rainbowMode.checked,
             showDrawBlobsFlag: showDrawBlobsFlag,
             showActiveFlag: showActiveFlag,
+            thresholdValue: thresholdValue.value
         }, '*');
     };
 }

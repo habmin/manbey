@@ -82,6 +82,11 @@
         <label for="drawBlobs">Draw Blobs</label>
         <input type="checkbox" id="drawBlobsCheck" name="drawBlobs"/>
       </div>
+      <div class="thresholdSlider">
+        <label class="sliderLabel" for="threshold">Threshold</label>
+        <input type="range" min="0.0" max="1.0" value="0.17" class="slider" step ="0.01" id="thresholdValue" name="thresholdValue"/>
+        <p id="thresholdOutput">0.17</p>
+      </div>
     </main>
   </body>
 </html>

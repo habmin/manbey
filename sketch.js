@@ -39,6 +39,8 @@ window.addEventListener('message', function(event) {
     } else if (data['activeX'] || data['activeY'] || data['activeW'] || data['activeH']) {
       window[Object.keys(data)[0]] = data[Object.keys(data)[0]];
       resizeArena();
+    } else if (data['thresholdValue']) {
+      vida.imageFilterThreshold = data.thresholdValue;
     } else {
       console.log("loaded other keys", data.key, data.value);
       window[Object.keys(data)[0]] = data[Object.keys(data)[0]];
@@ -60,6 +62,7 @@ window.addEventListener('message', function(event) {
       window.rainbowMode = data.rainbowMode;
       window.showDrawBlobsFlag = data.showDrawBlobsFlag;
       window.showActiveFlag = data.showActiveFlag;
+      window.thresholdValue = data.thresholdValue;
   }
 });
 
