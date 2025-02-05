@@ -154,7 +154,7 @@ activeAreaCheck.oninput = () => {
     sendUpdate('showActiveFlag', showActiveFlag);
 }
 // Setup function runs once at the beginning
-function setup() {
+window.onload = () => {
     canvasWindow = window.open('canvas.html', 'canvasWindow', 'width=800, height=800');
     canvasWindow.onload = () => {
         canvasWindow.postMessage({

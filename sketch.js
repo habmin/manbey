@@ -30,12 +30,7 @@ window.addEventListener('message', function(event) {
     console.log("single data", data);
     if (data['captureBtn']) {
       console.log("loaded capture");
-      if (video !== null && video !== undefined) { // safety first
-        console.log("BEGINNING CAPTURE");
-        vida.setBackgroundImage(video);
-        points = [];
-        blobs = vida.getBlobs();
-      }
+      startCapture();
     } else if (data['stopBtn']) {
       blobs = [];
     } else if (data['clearBtn']) {
@@ -94,11 +89,7 @@ function setup() {
   vida.handleActiveZonesFlag = true;
   vida.addActiveZone("arena", float(activeX), float(activeY), float(activeW), float(activeH));
   vida.setActiveZonesNormFillThreshold(0.5);
-  console.log(vida)
   setActivePoints();
-  vida.setBackgroundImage(video);
-  points = [];
-  blobs = vida.getBlobs();
 }
 
 // captureBtn.onclick = () => {
@@ -256,7 +247,7 @@ function draw() {
     }
   } catch {}
   
-  if (pointillismMode) {
+  if (pointillismMode && points.length > 0) {
     noStroke();
     for (let i = 0; i < points.length; i++) {
       if (rainbowMode.checked) {
@@ -274,7 +265,7 @@ function draw() {
     }
   }
   
-  if (drawingMode) {
+  if (drawingMode && points.length > 0) {
     noFill();
     for (let i = 0; i < points.length; i++) {
       if (i % 4 == 0) {
