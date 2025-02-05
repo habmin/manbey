@@ -78,8 +78,11 @@ artMenu.oninput = () => {
 let layerFlags = {
     thresholdFlag: false,
     videoFlag: true,
-    canvasFlag: false
-};
+    starfieldFlag: false,
+    arenaFlag: false,
+    canvasFlag: false,
+    nintiesFlag: false
+  };
 
 let backgroundMenu = document.getElementById('backgroundMenu');
 
@@ -87,17 +90,50 @@ backgroundMenu.oninput = () => {
     if (backgroundMenu.value == "threshold") {
         layerFlags.thresholdFlag = true;
         layerFlags.videoFlag = false;
-        layerFlags.canvasFlag = false;
+        layerFlags.starfieldFlag = false,
+        layerFlags.canvasFlag = false,
+        layerFlags.arenaFlag = false,
+        layerFlags.nintiesFlag = false
     }
     else if (backgroundMenu.value == "canvas") {
         layerFlags.thresholdFlag = false;
         layerFlags.videoFlag = false;
-        layerFlags.canvasFlag = true;
+        layerFlags.starfieldFlag = false,
+        layerFlags.canvasFlag = true,
+        layerFlags.arenaFlag = false,
+        layerFlags.nintiesFlag = false
     }
     else if (backgroundMenu.value == "camera") {
         layerFlags.thresholdFlag = false;
         layerFlags.videoFlag = true;
-        layerFlags.canvasFlag = false;
+        layerFlags.starfieldFlag = false,
+        layerFlags.canvasFlag = false,
+        layerFlags.arenaFlag = false,
+        layerFlags.nintiesFlag = false
+    }
+    else if (backgroundMenu.value == "starfield") {
+        layerFlags.thresholdFlag = false;
+        layerFlags.videoFlag = false;
+        layerFlags.starfieldFlag = true,
+        layerFlags.canvasFlag = false,
+        layerFlags.arenaFlag = false,
+        layerFlags.nintiesFlag = false
+    }
+    else if (backgroundMenu.value == "arena") {
+        layerFlags.thresholdFlag = false;
+        layerFlags.videoFlag = false;
+        layerFlags.starfieldFlag = false,
+        layerFlags.canvasFlag = false,
+        layerFlags.arenaFlag = true,
+        layerFlags.nintiesFlag = false
+    }
+    else if (backgroundMenu.value == "90s") {
+        layerFlags.thresholdFlag = false;
+        layerFlags.videoFlag = false;
+        layerFlags.starfieldFlag = false,
+        layerFlags.canvasFlag = false,
+        layerFlags.arenaFlag = false,
+        layerFlags.nintiesFlag = true
     }
     sendUpdate('layerFlags', layerFlags);
 }

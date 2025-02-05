@@ -89,97 +89,11 @@ function setup() {
   setActivePoints();
 }
 
-// captureBtn.onclick = () => {
-//   if (video !== null && video !== undefined) { // safety first
-//     vida.setBackgroundImage(video);
-//     points = [];
-//     blobs = vida.getBlobs();
-//   }
-// };
-
-// stopBtn.onclick = () => {
-//   blobs = [];
-// };
-
-// clearBtn.onclick = () => {
-//   blobs = [];
-//   points = [];
-// };
-
-// let pointillismMode = true;
-// let drawingMode = false;
-
-// let artMenu = document.getElementById('artMenu');
-
-// artMenu.oninput = () => {
-//   if (artMenu.value == "point") {
-//     pointillismMode = true;
-//     drawingMode = false;
-//   }
-//   else if (artMenu.value == "draw") {
-//     pointillismMode = false;
-//     drawingMode = true;
-//   }
-// };
-
-// let layerFlags = {
-//   thresholdFlag: false,
-//   videoFlag: true,
-//   canvasFlag: false
-// };
-
-// let backgroundMenu = document.getElementById('backgroundMenu');
-
-// backgroundMenu.oninput = () => {
-//   if (video !== null && video !== undefined) {
-//     if (backgroundMenu.value == "threshold") {
-//       layerFlags.thresholdFlag = true;
-//       layerFlags.videoFlag = false;
-//       layerFlags.canvasFlag = false;
-//     }
-//     else if (backgroundMenu.value == "canvas") {
-//       layerFlags.thresholdFlag = false;
-//       layerFlags.videoFlag = false;
-//       layerFlags.canvasFlag = true;
-//     }
-//     else if (backgroundMenu.value == "camera") {
-//       layerFlags.thresholdFlag = false;
-//       layerFlags.videoFlag = true;
-//       layerFlags.canvasFlag = false;
-//     }
-//   }
-// }
-
-// let color1 = document.getElementById('color1');
-// let color2 = document.getElementById('color2');
-// let color3 = document.getElementById('color3');
-
-// let swiggleCheck = document.getElementById('swiggleCheck');
-// let swiggleValue = document.getElementById('swiggleValue');
-// let raindbowMode = document.getElementById('rainbowMode');
-
-// let showDrawBlobsFlag = false;
-// let showActiveFlag = false;
-
-// let drawBlobsCheck = document.getElementById('drawBlobsCheck');
-// let activeAreaCheck = document.getElementById('activeAreaCheck');
-
-// drawBlobsCheck.oninput = () => {
-//   if (drawBlobsCheck.checked)
-//     showDrawBlobsFlag = true;
-//   else
-//     showDrawBlobsFlag = false;
-// }
-
-// activeAreaCheck.oninput = () => {
-//   if (activeAreaCheck.checked)
-//     showActiveFlag = true;
-//   else
-//     showActiveFlag = false;
-// }
-
 function preload() { 
-   canvas = loadImage('canvas.jpg')
+  canvas = loadImage('images/canvas.jpg');
+  starfield = loadImage('images/starfield.png');
+  arena = loadImage('images/arena.jpg');
+  ninties = loadImage('images/90s.jpg');
 }
 
 function resizeArena() {
@@ -190,22 +104,22 @@ function resizeArena() {
 }
 
 function setActivePoints() {
-    activeXPos = {
-      'x': video.width * activeX,
-      'y': video.height * activeY
-    };
-    activeWPos = {
-      'x': (video.width * activeX) + (video.width * activeW),
-      'y': video.height * activeY
-    };
-    activeHPos = {
-     'x': (video.width * activeX) + (video.width * activeW),
-     'y': (video.height * activeY) + (video.height * activeH)
-    };
-    activeYPos = {
-      'x': video.width * activeX,
-      'y': (video.height * activeY) + (video.height * activeH)
-    };
+  activeXPos = {
+    'x': video.width * activeX,
+    'y': video.height * activeY
+  };
+  activeWPos = {
+    'x': (video.width * activeX) + (video.width * activeW),
+    'y': video.height * activeY
+  };
+  activeHPos = {
+    'x': (video.width * activeX) + (video.width * activeW),
+    'y': (video.height * activeY) + (video.height * activeH)
+  };
+  activeYPos = {
+    'x': video.width * activeX,
+    'y': (video.height * activeY) + (video.height * activeH)
+  };
 }
 
 function draw() {
@@ -220,6 +134,18 @@ function draw() {
   if (layerFlags.canvasFlag) {
     canvas.resize(video.width, video.height)
     image(canvas, 0, 0);
+  }
+  if (layerFlags.starfieldFlag) {
+    starfield.resize(video.width, video.height)
+    image(starfield, 0, 0);
+  }
+  if (layerFlags.arenaFlag) {
+    arena.resize(video.width, video.height)
+    image(arena, 0, 0);
+  }
+  if (layerFlags.nintiesFlag) {
+    ninties.resize(video.width, video.height)
+    image(ninties, 0, 0);
   }
   try {
     for (let i = 0; i < blobs.length; i++) {

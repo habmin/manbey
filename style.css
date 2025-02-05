@@ -53,6 +53,21 @@ main {
 
 .artBar {
   display: flex;
+  margin: 1rem;
+  width: 640px;
   flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-around !important;
 }
 
+.drawingMenu {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+}
+
+.colorPickerMenu {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+}
