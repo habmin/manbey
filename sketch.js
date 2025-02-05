@@ -157,6 +157,14 @@ let showActiveFlag = false;
 let drawBlobsCheck = document.getElementById('drawBlobsCheck');
 let activeAreaCheck = document.getElementById('activeAreaCheck');
 
+let thresholdValue = document.getElementById('thresholdValue');
+let thresholdOutput = document.getElementById('thresholdOutput');
+
+thresholdValue.oninput = (event) => {
+  vida.imageFilterThreshold = event.target.value;
+  thresholdOutput.innerHTML = event.target.value;
+}
+
 drawBlobsCheck.oninput = () => {
   if (drawBlobsCheck.checked)
     showDrawBlobsFlag = true;
