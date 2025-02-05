@@ -155,7 +155,7 @@ activeAreaCheck.oninput = () => {
 }
 // Setup function runs once at the beginning
 window.onload = () => {
-    canvasWindow = window.open('canvas.html', 'canvasWindow', 'width=800, height=800');
+    canvasWindow = window.open('canvas.html', 'canvasWindow', 'location=no, toolbar=no, menubar=no, resizable=yes, width=800, height=800');
     canvasWindow.onload = () => {
         canvasWindow.postMessage({
             activeX: activeX.value,
