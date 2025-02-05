@@ -82,6 +82,7 @@ artMenu.oninput = () => {
 let layerFlags = {
   thresholdFlag: false,
   videoFlag: true,
+  starfieldFlag: false,
   canvasFlag: false
 };
 
@@ -92,16 +93,25 @@ backgroundMenu.oninput = () => {
     if (backgroundMenu.value == "threshold") {
       layerFlags.thresholdFlag = true;
       layerFlags.videoFlag = false;
+      layerFlags.starfieldFlag = false,
       layerFlags.canvasFlag = false;
     }
     else if (backgroundMenu.value == "canvas") {
       layerFlags.thresholdFlag = false;
       layerFlags.videoFlag = false;
+      layerFlags.starfieldFlag = false,
       layerFlags.canvasFlag = true;
     }
     else if (backgroundMenu.value == "camera") {
       layerFlags.thresholdFlag = false;
       layerFlags.videoFlag = true;
+      layerFlags.starfieldFlag = false,
+      layerFlags.canvasFlag = false;
+    }
+    else if (backgroundMenu.value == "starfield") {
+      layerFlags.thresholdFlag = false;
+      layerFlags.videoFlag = false;
+      layerFlags.starfieldFlag = true,
       layerFlags.canvasFlag = false;
     }
   }
@@ -136,7 +146,8 @@ activeAreaCheck.oninput = () => {
 }
 
 function preload() { 
-   canvas = loadImage('canvas.jpg')
+   canvas = loadImage('images/canvas.jpg');
+   starfield = loadImage('images/starfield.png');
 }
 
 function resizeArena() {
@@ -203,6 +214,10 @@ function draw() {
   if (layerFlags.canvasFlag) {
     canvas.resize(video.width, video.height)
     image(canvas, 0, 0);
+  }
+  if (layerFlags.starfieldFlag) {
+    starfield.resize(video.width, video.height)
+    image(starfield, 0, 0);
   }
   try {
     for (let i = 0; i < blobs.length; i++) {
