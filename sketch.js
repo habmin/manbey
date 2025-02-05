@@ -19,151 +19,58 @@ let blobs = [];
 let points = [];
 let canvas;
 
-let activeX = document.getElementById('activeX');
-let activeY = document.getElementById('activeY');
-let activeW = document.getElementById('activeW');
-let activeH = document.getElementById('activeH');
-
 let activeXPos;
 let activeWPos;
 let activeYPos;
 let activeHPos;
 
-activeX.oninput = () => {
-  resizeArena();
-}
-activeY.oninput = () => {
-  resizeArena();
-}
-activeW.oninput = () => {
-  resizeArena();
-}
-activeH.oninput = () => {
-  resizeArena();
-}
-
-let captureBtn = document.getElementById('captureBtn');
-let stopBtn = document.getElementById('stopBtn');
-let clearBtn = document.getElementById('clearBtn');
-
-captureBtn.onclick = () => {
-  if (video !== null && video !== undefined) { // safety first
-    vida.setBackgroundImage(video);
-    points = [];
-    blobs = vida.getBlobs();
-  }
-};
-
-stopBtn.onclick = () => {
-  blobs = [];
-};
-
-clearBtn.onclick = () => {
-  blobs = [];
-  points = [];
-};
-
-let pointillismMode = true;
-let drawingMode = false;
-
-let artMenu = document.getElementById('artMenu');
-
-artMenu.oninput = () => {
-  if (artMenu.value == "point") {
-    pointillismMode = true;
-    drawingMode = false;
-  }
-  else if (artMenu.value == "draw") {
-    pointillismMode = false;
-    drawingMode = true;
-  }
-};
-
-let layerFlags = {
-  thresholdFlag: false,
-  videoFlag: true,
-  canvasFlag: false
-};
-
-let backgroundMenu = document.getElementById('backgroundMenu');
-
-backgroundMenu.oninput = () => {
-  if (video !== null && video !== undefined) {
-    if (backgroundMenu.value == "threshold") {
-      layerFlags.thresholdFlag = true;
-      layerFlags.videoFlag = false;
-      layerFlags.canvasFlag = false;
+window.addEventListener('message', function(event) {
+  const data = event.data;
+  if (Object.keys(data).length === 1) {
+    console.log("single data", data);
+    if (data['captureBtn']) {
+      console.log("loaded capture");
+      if (video !== null && video !== undefined) { // safety first
+        console.log("BEGINNING CAPTURE");
+        vida.setBackgroundImage(video);
+        points = [];
+        blobs = vida.getBlobs();
+        console.log(blobs);
+      }
+    } else if (data['stopBtn']) {
+      blobs = [];
+    } else if (data['clearBtn']) {
+      blobs = [];
+      points = [];
+    } else if (data['activeX'] || data['activeY'] || data['activeW'] || data['activeH']) {
+      window.activeX = data.activeX;
+      window.activeY = data.activeY;
+      window.activeW = data.activeW;
+      window.activeH = data.activeH;
+      resizeArena();
+    } else if (data.key) {
+      console.log("loaded other keys", data.key, data.value);
+      window[data.key] = data.value;
     }
-    else if (backgroundMenu.value == "canvas") {
-      layerFlags.thresholdFlag = false;
-      layerFlags.videoFlag = false;
-      layerFlags.canvasFlag = true;
-    }
-    else if (backgroundMenu.value == "camera") {
-      layerFlags.thresholdFlag = false;
-      layerFlags.videoFlag = true;
-      layerFlags.canvasFlag = false;
-    }
+  } else {
+    console.log("loaded data");
+      window.activeX = data.activeX;
+      window.activeY = data.activeY;
+      window.activeW = data.activeW;
+      window.activeH = data.activeH;
+      window.pointillismMode = data.pointillismMode;
+      window.drawingMode = data.drawingMode;
+      window.layerFlags = data.layerFlags;
+      window.color1 = data.color1;
+      window.color2 = data.color2;
+      window.color3 = data.color3;
+      window.swiggleCheck = data.swiggleCheck;
+      window.swiggleValue = data.swiggleValue;
+      window.rainbowMode = data.rainbowMode;
+      window.showDrawBlobsFlag = data.showDrawBlobsFlag;
+      window.showActiveFlag = data.showActiveFlag;
   }
-}
-
-let color1 = document.getElementById('color1');
-let color2 = document.getElementById('color2');
-let color3 = document.getElementById('color3');
-
-let swiggleCheck = document.getElementById('swiggleCheck');
-let swiggleValue = document.getElementById('swiggleValue');
-let raindbowMode = document.getElementById('rainbowMode');
-
-let showDrawBlobsFlag = false;
-let showActiveFlag = false;
-
-let drawBlobsCheck = document.getElementById('drawBlobsCheck');
-let activeAreaCheck = document.getElementById('activeAreaCheck');
-
-drawBlobsCheck.oninput = () => {
-  if (drawBlobsCheck.checked)
-    showDrawBlobsFlag = true;
-  else
-    showDrawBlobsFlag = false;
-}
-
-activeAreaCheck.oninput = () => {
-  if (activeAreaCheck.checked)
-    showActiveFlag = true;
-  else
-    showActiveFlag = false;
-}
-
-function preload() { 
-   canvas = loadImage('canvas.jpg')
-}
-
-function resizeArena() {
-  vida.removeActiveZone("arena");
-  vida.addActiveZone("arena", float(activeX.value), float(activeY.value), float(activeW.value), float(activeH.value));
-  vida.setActiveZonesNormFillThreshold(0.05);
-  setActivePoints();
-}
-
-function setActivePoints() {
-    activeXPos = {
-      'x': video.width * activeX.value,
-      'y': video.height * activeY.value
-    };
-    activeWPos = {
-      'x': (video.width * activeX.value) + (video.width * activeW.value),
-      'y': video.height * activeY.value
-    };
-    activeHPos = {
-     'x': (video.width * activeX.value) + (video.width * activeW.value),
-     'y': (video.height * activeY.value) + (video.height * activeH.value)
-    };
-    activeYPos = {
-      'x': video.width * activeX.value,
-      'y': (video.height * activeY.value) + (video.height * activeH.value)
-    };
-}
+});
 
 // Setup function runs once at the beginning
 function setup() {
@@ -186,9 +93,132 @@ function setup() {
   vida.trackBlobsMaxNormDist = 1;
   vida.rejectBlobsMethod = vida.REJECT_NONE_BLOBS;
   vida.handleActiveZonesFlag = true;
-  vida.addActiveZone("arena", float(activeX.value), float(activeY.value), float(activeW.value), float(activeH.value));
+  vida.addActiveZone("arena", float(activeX), float(activeY), float(activeW), float(activeH));
   vida.setActiveZonesNormFillThreshold(0.5);
+  console.log(vida)
   setActivePoints();
+  vida.setBackgroundImage(video);
+  points = [];
+  blobs = vida.getBlobs();
+}
+
+// captureBtn.onclick = () => {
+//   if (video !== null && video !== undefined) { // safety first
+//     vida.setBackgroundImage(video);
+//     points = [];
+//     blobs = vida.getBlobs();
+//   }
+// };
+
+// stopBtn.onclick = () => {
+//   blobs = [];
+// };
+
+// clearBtn.onclick = () => {
+//   blobs = [];
+//   points = [];
+// };
+
+// let pointillismMode = true;
+// let drawingMode = false;
+
+// let artMenu = document.getElementById('artMenu');
+
+// artMenu.oninput = () => {
+//   if (artMenu.value == "point") {
+//     pointillismMode = true;
+//     drawingMode = false;
+//   }
+//   else if (artMenu.value == "draw") {
+//     pointillismMode = false;
+//     drawingMode = true;
+//   }
+// };
+
+// let layerFlags = {
+//   thresholdFlag: false,
+//   videoFlag: true,
+//   canvasFlag: false
+// };
+
+// let backgroundMenu = document.getElementById('backgroundMenu');
+
+// backgroundMenu.oninput = () => {
+//   if (video !== null && video !== undefined) {
+//     if (backgroundMenu.value == "threshold") {
+//       layerFlags.thresholdFlag = true;
+//       layerFlags.videoFlag = false;
+//       layerFlags.canvasFlag = false;
+//     }
+//     else if (backgroundMenu.value == "canvas") {
+//       layerFlags.thresholdFlag = false;
+//       layerFlags.videoFlag = false;
+//       layerFlags.canvasFlag = true;
+//     }
+//     else if (backgroundMenu.value == "camera") {
+//       layerFlags.thresholdFlag = false;
+//       layerFlags.videoFlag = true;
+//       layerFlags.canvasFlag = false;
+//     }
+//   }
+// }
+
+// let color1 = document.getElementById('color1');
+// let color2 = document.getElementById('color2');
+// let color3 = document.getElementById('color3');
+
+// let swiggleCheck = document.getElementById('swiggleCheck');
+// let swiggleValue = document.getElementById('swiggleValue');
+// let raindbowMode = document.getElementById('rainbowMode');
+
+// let showDrawBlobsFlag = false;
+// let showActiveFlag = false;
+
+// let drawBlobsCheck = document.getElementById('drawBlobsCheck');
+// let activeAreaCheck = document.getElementById('activeAreaCheck');
+
+// drawBlobsCheck.oninput = () => {
+//   if (drawBlobsCheck.checked)
+//     showDrawBlobsFlag = true;
+//   else
+//     showDrawBlobsFlag = false;
+// }
+
+// activeAreaCheck.oninput = () => {
+//   if (activeAreaCheck.checked)
+//     showActiveFlag = true;
+//   else
+//     showActiveFlag = false;
+// }
+
+function preload() { 
+   canvas = loadImage('canvas.jpg')
+}
+
+function resizeArena() {
+  vida.removeActiveZone("arena");
+  vida.addActiveZone("arena", float(activeX), float(activeY), float(activeW), float(activeH));
+  vida.setActiveZonesNormFillThreshold(0.05);
+  setActivePoints();
+}
+
+function setActivePoints() {
+    activeXPos = {
+      'x': video.width * activeX,
+      'y': video.height * activeY
+    };
+    activeWPos = {
+      'x': (video.width * activeX) + (video.width * activeW),
+      'y': video.height * activeY
+    };
+    activeHPos = {
+     'x': (video.width * activeX) + (video.width * activeW),
+     'y': (video.height * activeY) + (video.height * activeH)
+    };
+    activeYPos = {
+      'x': video.width * activeX,
+      'y': (video.height * activeY) + (video.height * activeH)
+    };
 }
 
 function draw() {
@@ -274,7 +304,6 @@ function draw() {
     vida.drawActiveZones(0,0);
   }
   createFrame();
-
 }
 
 function inActiveZone(x, y) {
@@ -351,10 +380,3 @@ function hexToRgb(hex) {
     b: parseInt(result[3], 16)  
     } : null;
 }
-
-
-
-
-
-
-
