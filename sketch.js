@@ -84,7 +84,8 @@ let layerFlags = {
   videoFlag: true,
   starfieldFlag: false,
   arenaFlag: false,
-  canvasFlag: false
+  canvasFlag: false,
+  nintiesFlag: false
 };
 
 let backgroundMenu = document.getElementById('backgroundMenu');
@@ -96,35 +97,48 @@ backgroundMenu.oninput = () => {
       layerFlags.videoFlag = false;
       layerFlags.starfieldFlag = false,
       layerFlags.canvasFlag = false,
-      layerFlags.arenaFlag = false
+      layerFlags.arenaFlag = false,
+      layerFlags.nintiesFlag = false
     }
     else if (backgroundMenu.value == "canvas") {
       layerFlags.thresholdFlag = false;
       layerFlags.videoFlag = false;
       layerFlags.starfieldFlag = false,
       layerFlags.canvasFlag = true,
-      layerFlags.arenaFlag = false
+      layerFlags.arenaFlag = false,
+      layerFlags.nintiesFlag = false
     }
     else if (backgroundMenu.value == "camera") {
       layerFlags.thresholdFlag = false;
       layerFlags.videoFlag = true;
       layerFlags.starfieldFlag = false,
       layerFlags.canvasFlag = false,
-      layerFlags.arenaFlag = false
+      layerFlags.arenaFlag = false,
+      layerFlags.nintiesFlag = false
     }
     else if (backgroundMenu.value == "starfield") {
       layerFlags.thresholdFlag = false;
       layerFlags.videoFlag = false;
       layerFlags.starfieldFlag = true,
       layerFlags.canvasFlag = false,
-      layerFlags.arenaFlag = false
+      layerFlags.arenaFlag = false,
+      layerFlags.nintiesFlag = false
     }
     else if (backgroundMenu.value == "arena") {
       layerFlags.thresholdFlag = false;
       layerFlags.videoFlag = false;
       layerFlags.starfieldFlag = false,
       layerFlags.canvasFlag = false,
-      layerFlags.arenaFlag = true
+      layerFlags.arenaFlag = true,
+      layerFlags.nintiesFlag = false
+    }
+    else if (backgroundMenu.value == "90s") {
+      layerFlags.thresholdFlag = false;
+      layerFlags.videoFlag = false;
+      layerFlags.starfieldFlag = false,
+      layerFlags.canvasFlag = false,
+      layerFlags.arenaFlag = false,
+      layerFlags.nintiesFlag = true
     }
   }
 }
@@ -161,6 +175,7 @@ function preload() {
    canvas = loadImage('images/canvas.jpg');
    starfield = loadImage('images/starfield.png');
    arena = loadImage('images/arena.jpg');
+   ninties = loadImage('images/90s.jpg');
 }
 
 function resizeArena() {
@@ -235,6 +250,10 @@ function draw() {
   if (layerFlags.arenaFlag) {
     arena.resize(video.width, video.height)
     image(arena, 0, 0);
+  }
+  if (layerFlags.nintiesFlag) {
+    ninties.resize(video.width, video.height)
+    image(ninties, 0, 0);
   }
   try {
     for (let i = 0; i < blobs.length; i++) {
