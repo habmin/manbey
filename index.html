@@ -38,11 +38,13 @@
         </div>
       </div>
       <div class="artBar">
-        <label for="artMode">Art Mode</label>
-        <select name="artMenu" id="artMenu">
-          <option class="artOption" value="point">Pointillism</option>
-          <option class="artOption" value="draw">Drawing</option>
-        </select>
+        <div class="drawingMenu">
+          <label for="artMode">Art Mode</label>
+          <select name="artMenu" id="artMenu">
+            <option class="artOption" value="point">Pointillism</option>
+            <option class="artOption" value="draw">Drawing</option>
+          </select>
+        </div>
         <div class="colorPickerMenu">
           <div class="colorMenu1">
             <label for="color1">Color 1</label>
@@ -57,12 +59,18 @@
             <input type="color" id="color3" value="#258fdb">
           </div>
         </div>
-        <label for="swiggleCheck">Swiggle Mode</label>
-        <input type="checkbox" id="swiggleCheck" name="swiggleCheck" />
-        <label class="sliderLabel" for="swiggleValue">Swigglification</label>
-        <input type="range" min="0" max="10" value="0" class="slider" step ="1" id="swiggleValue" name="swiggleValue"/>
-        <label for="rainbowMode">Rainbow Mode</label>
-        <input type="checkbox" id="rainbowMode" name="rainbowMode" />
+        <div>
+          <label for="swiggleCheck">Swiggle Mode</label>
+          <input type="checkbox" id="swiggleCheck" name="swiggleCheck" />
+          <div>
+            <label class="sliderLabel" for="swiggleValue">Swigglification</label>
+            <input type="range" min="0" max="10" value="0" class="slider" step ="1" id="swiggleValue" name="swiggleValue"/>
+          </div>
+        </div>
+        <div>
+          <label for="rainbowMode">Rainbow Mode</label>
+          <input type="checkbox" id="rainbowMode" name="rainbowMode" />
+        </div>
       </div>
       <div class="filterBar">
         <label for="backgroundMenu">Background</label>
