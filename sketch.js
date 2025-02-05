@@ -37,14 +37,11 @@ window.addEventListener('message', function(event) {
       blobs = [];
       points = [];
     } else if (data['activeX'] || data['activeY'] || data['activeW'] || data['activeH']) {
-      window.activeX = data.activeX;
-      window.activeY = data.activeY;
-      window.activeW = data.activeW;
-      window.activeH = data.activeH;
+      window[Object.keys(data)[0]] = data[Object.keys(data)[0]];
       resizeArena();
-    } else if (data.key) {
+    } else {
       console.log("loaded other keys", data.key, data.value);
-      window[data.key] = data.value;
+      window[Object.keys(data)[0]] = data[Object.keys(data)[0]];
     }
   } else {
     console.log("loaded data");
@@ -229,13 +226,13 @@ function draw() {
       if (inActiveZone(blobs[i].normMassCenterX * video.width, blobs[i].normMassCenterY * video.height)) {
         let colorValue;
         if (i % 3 <= 0) {
-          colorValue = hexToRgb(color1.value);
+          colorValue = hexToRgb(color1);
         }
         else if (i % 3 > 0 && i % 3 <= 1) {
-          colorValue = hexToRgb(color2.value);
+          colorValue = hexToRgb(color2);
         }
         else {
-          colorValue = hexToRgb(color3.value);
+          colorValue = hexToRgb(color3);
         }
         points.push({
           x: blobs[i].normMassCenterX * video.width, 
@@ -250,7 +247,7 @@ function draw() {
   if (pointillismMode && points.length > 0) {
     noStroke();
     for (let i = 0; i < points.length; i++) {
-      if (rainbowMode.checked) {
+      if (rainbowMode) {
         colorMode(HSB);
         fill(Math.floor((Date.now() / 10) + i) % 361, 50, 100, 20);
         colorMode(RGB);
@@ -258,8 +255,8 @@ function draw() {
       else {
         fill(points[i].colorRGB.r, points[i].colorRGB.g, points[i].colorRGB.b, 92);
       }
-      if (swiggleCheck.checked)
-        circle(points[i].x + random(-int(swiggleValue.value), swiggleValue.value), points[i].y + random(-int(swiggleValue.value), swiggleValue.value), points[i].sizeVariance);
+      if (swiggleCheck)
+        circle(points[i].x + random(-int(swiggleValue), swiggleValue), points[i].y + random(-int(swiggleValue), swiggleValue), points[i].sizeVariance);
       else
         circle(points[i].x, points[i].y, points[i].sizeVariance);
     }
@@ -271,7 +268,7 @@ function draw() {
       if (i % 4 == 0) {
         beginShape();
       }
-      if (rainbowMode.checked) {
+      if (rainbowMode) {
         colorMode(HSB);
         stroke(Math.floor((Date.now() / 10) + i) % 361, 50, 100, 92);
         colorMode(RGB);
@@ -279,8 +276,8 @@ function draw() {
       else
         stroke(points[i].colorRGB.r, points[i].colorRGB.g, points[i].colorRGB.b, 92);
       strokeWeight(points[i].sizeVariance - 3);
-      if (swiggleCheck.checked)
-        curveVertex(points[i].x + random(-int(swiggleValue.value), swiggleValue.value), points[i].y + random(-int(swiggleValue.value), swiggleValue.value));
+      if (swiggleCheck)
+        curveVertex(points[i].x + random(-int(swiggleValue), swiggleValue), points[i].y + random(-int(swiggleValue), swiggleValue));
       else
         curveVertex(points[i].x, points[i].y);
       if (i % 4 == 3) {
